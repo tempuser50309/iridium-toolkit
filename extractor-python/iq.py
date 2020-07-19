@@ -9,5 +9,4 @@ def write(file_name, signal):
     signal.tofile(file_name)
 
 def read(file_name):
-    signal = numpy.fromfile(file_name, dtype=numpy.complex64)
-    return signal
+    return numpy.fromfile(file_name, dtype=numpy.complex64)

@@ -60,11 +60,7 @@ class CutAndDownmix(object):
         return self._output_sample_rate
 
     def _fft(self, slice, fft_len=None):
-        if fft_len:
-            fft_result = numpy.fft.fft(slice, fft_len)
-        else:
-            fft_result = numpy.fft.fft(slice)
-
+        fft_result = numpy.fft.fft(slice, fft_len) if fft_len else numpy.fft.fft(slice)
         fft_freq = numpy.fft.fftfreq(len(fft_result))
         fft_result = numpy.fft.fftshift(fft_result)
         fft_freq = numpy.fft.fftshift(fft_freq)
@@ -76,13 +72,14 @@ class CutAndDownmix(object):
         signal_mag_lp = scipy.signal.fftconvolve(signal_mag, self._low_pass2, mode='same')
 
         threshold = numpy.max(signal_mag_lp) * 0.5
-        start = max(numpy.where(signal_mag_lp>threshold)[0][0] - self._pre_start_samples, 0)
-        
         #plt.plot(signal_mag)
         #plt.plot(signal_mag_lp)
         #plt.plot(start, signal_mag_lp[start], 'b*')
         #plt.show()
-        return start
+        return max(
+            numpy.where(signal_mag_lp > threshold)[0][0] - self._pre_start_samples,
+            0,
+        )
 
     def cut_and_downmix(self, signal, search_offset=None, direction=None, frequency_offset=0, phase_offset=0):
         if self._verbose:

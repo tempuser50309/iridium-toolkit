@@ -66,17 +66,13 @@ def multiply(a,b):
     idx=0
     while (b>0):
         if (b%2):
-            result=result^(a<<idx)
+            result ^= a<<idx
         b>>=1
         idx+=1
     return result
 
 def polystr(a):
-    poly=[]
-    for i in xrange(len(a)):
-        if (a[i]=="1"):
-            poly.append("x^%d"%(len(a)-1-i))
-
+    poly = ["x^%d"%(len(a)-1-i) for i in xrange(len(a)) if (a[i]=="1")]
     return "+".join(poly)
 
 def poly(a):

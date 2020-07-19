@@ -107,7 +107,7 @@ class ReassembleIDA(Reassemble):
         pass
     def filter(self,line):
         q=super(ReassembleIDA,self).filter(line)
-        if q==None: return None
+        if q is None: return None
         if q.typ=="IDA:":
             qqq=re.compile('.* CRC:OK')
             if not qqq.match(q.data):
@@ -202,16 +202,10 @@ class ReassembleIDA(Reassemble):
         print "%d dupes removed."%(self.stat_dupes)
     def consume(self,q):
         (data,time,ul,level)=q
-        if ul:
-            ul="UL"
-        else:
-            ul="DL"
+        ul = "UL" if ul else "DL"
         str=""
         for c in data:
-            if( ord(c)>=32 and ord(c)<127):
-                str+=c
-            else:
-                str+="."
+            str += c if ( ord(c)>=32 and ord(c)<127) else "."
         print >>outfile, "%09d %s %s | %s"%(time,ul," ".join("%02x"%ord(x) for x in data),str)
 
 class ReassembleIDALAP(ReassembleIDA):
@@ -271,7 +265,7 @@ class ReassembleIRA(Reassemble):
         pass
     def filter(self,line):
         q=super(ReassembleIRA,self).filter(line)
-        if q==None: return None
+        if q is None: return None
         if q.typ=="IRA:":
             p=re.compile('.*sat:(\d+) beam:(\d+) pos=\((.[0-9.]+)/(.[0-9.]+)\) alt=([-0-9]+) .* bc_sb:\d+ (.*)')
             m=p.match(q.data)
@@ -297,7 +291,7 @@ class ReassembleMSG(Reassemble):
         pass
     def filter(self,line):
         q=super(ReassembleMSG,self).filter(line)
-        if q == None: return None
+        if q is None: return None
         if q.typ == "MSG:":
             #ric:0098049 fmt:05 seq:43 1010010000 1/1 oNEZCOuxvM3PuiQHujzQYd5n0Q8ra0wfMG2WnnhoxAnunT9xzIBSkXyvNP[3]     +11111
             p=re.compile('.* ric:(\d+) fmt:(\d+) seq:(\d+) [01]+ (\d)/(\d) csum:([0-9a-f][0-9a-f]) msg:([0-9a-f]+)\.([01]*) ')
@@ -386,8 +380,6 @@ class ReassembleMSG(Reassemble):
             print >> outfile, str
 
 zx=None
-if False:
-    pass
 if mode == "ida":
     zx=ReassembleIDA()
 elif mode == "lap":

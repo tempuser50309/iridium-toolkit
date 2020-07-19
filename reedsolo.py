@@ -160,7 +160,7 @@ def find_prime_polys(generator=2, c_exp=8, fast_primes=False, single=False):
 
         # Second loop, build the whole Galois Field
         x = 1
-        for i in xrange(field_charac):
+        for _ in xrange(field_charac):
             # Compute the next value in the field (ie, the next power of alpha/generator)
             x = gf_mult_noLUT(x, generator, prim, field_charac+1)
 
@@ -370,12 +370,12 @@ def gf_poly_square(poly):
     out = bytearray(2*length - 1)
     for i in xrange(length-1):
         p = poly[i]
-        k = 2*i
         if p != 0:
+            k = 2*i
             #out[k] = gf_exp[(2*gf_log[p]) % field_charac] # not necessary to modulo (2^r)-1 since gf_exp is duplicated up to 510.
             out[k] = gf_exp[2*gf_log[p]]
-        #else: # not necessary since the output is already initialized to an array of 0
-            #out[k] = 0
+            #else: # not necessary since the output is already initialized to an array of 0
+                #out[k] = 0
     out[2*length-2] = gf_exp[2*gf_log[poly[length-1]]]
     if out[0] == 0: out[0] = 2*poly[1] - 1
     return out

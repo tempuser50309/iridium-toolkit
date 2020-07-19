@@ -15,7 +15,10 @@ def filter_voc(t_start = None, t_stop = None, f_min = None, f_max = None):
 
     for line in f:
         line = line.strip()
-        if 'VOC: ' in line and not "LCW(0,001111,100000000000000000000" in line:
+        if (
+            'VOC: ' in line
+            and "LCW(0,001111,100000000000000000000" not in line
+        ):
             line_split = line.split()
             oknok=0
             if line_split[1] == 'VOC:':

@@ -35,10 +35,7 @@ def to_hex(msg):
 def to_ascii(msg):
     a = ''
     for x in msg:
-        if 32 <= ord(x) < 127:
-            a += x
-        else:
-            a += '.'
+        a += x if 32 <= ord(x) < 127 else '.'
     return a
 
 def imei_parse_nibble(nibble):

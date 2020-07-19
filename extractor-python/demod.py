@@ -19,16 +19,13 @@ UW_DOWNLINK = "022220002002"
 UW_UPLINK = "220002002022"
 
 def normalize(v):
-    m = max([abs(x) for x in v])
+    m = max(abs(x) for x in v)
     return [x/m for x in v]
 
 def mynormalize(v):
     reals = normalize([x.real for x in v])
     imags = normalize([x.imag for x in v])
-    zip=[]
-    for i in xrange(len(reals)):
-        zip.append(complex(reals[i],imags[i]))
-    return zip
+    return [complex(reals[i],imags[i]) for i in xrange(len(reals))]
 
 class Demod(object):
     def __init__(self, sample_rate, verbose=False, debug=False):

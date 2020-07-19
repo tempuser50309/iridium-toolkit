@@ -32,11 +32,7 @@ class PeakHold(object):
         self.peaks = numpy.array([-100000000]*self._fft_size)
 
     def _fft(self, slice, fft_len=None):
-        if fft_len:
-            fft_result = numpy.fft.fft(slice, fft_len)
-        else:
-            fft_result = numpy.fft.fft(slice)
-
+        fft_result = numpy.fft.fft(slice, fft_len) if fft_len else numpy.fft.fft(slice)
         fft_result = numpy.fft.fftshift(fft_result)
         return fft_result/len(slice)
 
