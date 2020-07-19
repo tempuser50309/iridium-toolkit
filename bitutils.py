@@ -29,15 +29,12 @@ def extract_timestamp(filename, dt):
   
 def parse_line_to_message(line):
     line = line.split()
-    if not line[0] == 'RX' and ('A:OK' not in line or len(line) < 10):
+    if line[0] != 'RX' and (('A:OK' not in line or len(line) < 10)):
         return None
     access = True
     lead_out = 'L:OK' in line
     name = line[1]
-    if name == "X":
-        timestamp = float(line[2])
-    else:
-        timestamp = extract_timestamp(name, line[2])
+    timestamp = float(line[2]) if name == "X" else extract_timestamp(name, line[2])
     freq = int(line[3])
     confidence = int(line[6][:-1])
     strength = float(line[7])

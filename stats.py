@@ -116,7 +116,7 @@ def legend_set(leg_item,onoff):
         txt.set_alpha(0.2)
         dot.set_alpha(0.2)
 
-leg_map=dict()
+leg_map = {}
 for i, ft in enumerate(data):
     # Make legend items pickable and save references to plot collection object
     leg_items[i].set_picker(5)  # 5 pts tolerance
@@ -129,10 +129,10 @@ fig=plt.gcf()
 def onpick(event):
     # on pick event toggle the visibility
     x=event.artist
-    if type(event.artist).__name__ == 'Legend':
+    if type(x).__name__ == 'Legend':
         return
     leg_item = event.artist
-    legend_set(event.artist,-1)
+    legend_set(leg_item, -1)
     fig.canvas.draw()
 
 fig.canvas.mpl_connect('pick_event', onpick)

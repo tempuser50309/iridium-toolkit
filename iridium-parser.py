@@ -113,7 +113,7 @@ if input == "dump" or output == "dump":
     import cPickle as pickle
     dumpfile="pickle.dump"
 
-if dosatclass == True:
+if dosatclass:
     import satclass
     satclass.init()
 
